@@ -4,19 +4,48 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("For Loop");
+            Console.WriteLine("Sisesta kõrgus (vähemalt 3):");
 
-            int loop = 10;
-
-            //int i on muutuja määratlemine ja selle väärtus on 0
-            //i < loop iga kord võrdleb loop muutuja, et kas on suurem i-st
-            //i++ liidab iga kord ühe korra juurde ehk sama hea kui i + 1
-
-            for (int i = 0; i < loop; i++)
+            if (!int.TryParse(Console.ReadLine(), out int height) || height < 3)
             {
-                Console.WriteLine("Loop" + i);
-                Thread.Sleep(1000);
-                Console.Beep();
+                Console.WriteLine("Sisesta täisarv: ");
+                return;
+            }
+
+            for (int row = 1; row <= height; row++)
+            {
+                for (int empty = 1; empty <= height - row; empty++)
+                {
+                    Console.Write(" ");
+                }
+
+                for (int location = 1; location <= 2 * row - 1; location++)
+                {
+                    bool thing =
+                    (row == 2 && location == 1) || // ||- see on või operaator e üks nõue peab olema täidetud
+                    (row == 2 && location == 1) || // - see on või operaator
+                    (row == height - 1 && location == 2 * row - 1) ||
+                    (row == height && location == row);
+
+                    Console.ForegroundColor = thing
+                        ? ConsoleColor.Red
+
+                     // ternary operaator: muutuja ? (kaks valikut peale seda)
+                     // kui esimene valik on vale, siis vali teine e
+                     // kui ei tule o-d, siis pane *
+                     Console.Write(thing ? "o" : "*");
+                }
+
+                Console.WriteLine();
+            }
+
+            for (int row = 1; row <= 2; row++)
+            {
+                for (int empty = 1; empty < height; empty++)
+                {
+                    Console.Write(" ");
+                }
+                Console.WriteLine("*");
             }
         }
     }
